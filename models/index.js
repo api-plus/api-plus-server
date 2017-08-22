@@ -19,12 +19,12 @@ const sequelize = new Sequelize(
   database
 );
 
-// import modals
+// import models
 function load(name) {
   return sequelize.import(path.join(__dirname, name));
 }
 
 module.exports = {
   db: sequelize,
-  projects: load('projects')
+  Projects: load('projects'),
 }

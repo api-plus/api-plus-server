@@ -4,13 +4,16 @@
   "description": "Simple Api Manager",
   "main": "server.js",
   "scripts": {
+    "sync": "node models/sync.js",
     "start": "nodemon server.js"
   },
   "author": "meikidd <meikidd@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "colorful": "^2.1.0",
+    "common-errors": "^1.0.4",
     "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
     "koa-static-cache": "^5.1.1",
     "sequelize": "^4.6.0",

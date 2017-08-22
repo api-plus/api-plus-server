@@ -1,8 +1,12 @@
+/*
+  create tables and initial data
+*/
+
 const logger = require('../common/logger');
 const { db } = require('./');
 
 db.sync({
-  force: true,
+  // force: true,
 }).then(() => {
   logger.info('sequelize sync and init success');
 }).catch(err => {
