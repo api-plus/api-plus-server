@@ -3,7 +3,7 @@ const Tracer = require('tracer');
 const config = require('../config');
 
 let opts = {
-  format: "{{timestamp}} <{{title}}> (in {{file}}:{{line}}) {{message}}",
+  format: "{{timestamp}} <{{title}}> ({{file}}:{{line}}) {{message}}",
   preprocess: function(data) {
     data.title = data.title.toUpperCase();
 
