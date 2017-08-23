@@ -6,7 +6,7 @@ const logger = require('../common/logger');
 const { db } = require('./');
 
 db.sync({
-  // force: true,
+  force: (process.argv[2] === '--force'),
 }).then(() => {
   logger.info('sequelize sync and init success');
 }).catch(err => {

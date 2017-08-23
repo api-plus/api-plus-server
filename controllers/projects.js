@@ -1,24 +1,23 @@
 const ErrorCode = require('common-errors');
 
-const logger = require('../common/logger');
-const res = require('../common/jsonResponse');
-const { Projects } = require('../models');
+const { success } = require('../common/jsonResponse');
+const { APIs, Projects } = require('../models');
 
-// 新建
+// create
 exports.Post = async function(ctx) {
   let body = ctx.request.body;
   if (!body.name) {
     throw ErrorCode.ArgumentNullError('name');
   }
 
-  ctx.body = res.success(await Projects.create(body));
+  ctx.body = success(await Projects.create(body));
 }
 
-// 删除
+// destroy
 exports.Del = async function(ctx) {
   let id = ctx.params.id
   if (!id) {
-    throw ErrorCode.ArgumentNullError('name');
+    throw ErrorCode.ArgumentNullError('id');
   }
 
   let deleteCount = await Projects.destroy({
@@ -27,12 +26,12 @@ exports.Del = async function(ctx) {
   if (!deleteCount) {
     throw ErrorCode.NotFoundError('id = ' + id);
   }
-  ctx.body = res.success({
+  ctx.body = success({
     id, deleteCount 
   });
 }
 
-// 修改
+// update
 exports.Put = async function(ctx) {
   let body = ctx.request.body;
   let id = ctx.params.id || body.id;
@@ -46,23 +45,27 @@ exports.Put = async function(ctx) {
   if (!affectedCount) {
     throw ErrorCode.NotFoundError('id = ' + id);
   }
-  ctx.body = res.success({
+  ctx.body = success({
     id, affectedCount
   });
 }
 
-// 获取
+// query
 exports.Get = async function(ctx) {
   let results = null;
   let id = ctx.params.id;
   if (id) {
-    results = await Projects.findById(id);
+    results = await Projects.findById(id, {
+      include: [ APIs ]
+    });
     if (!results) {
       throw ErrorCode.NotFoundError('id = ' + id);
     }
   } else {
-    results = await Projects.findAll();
+    results = await Projects.findAll({
+      include: [ APIs ]
+    });
   }
 
-  ctx.body = res.success(results);
+  ctx.body = success(results);
 }
