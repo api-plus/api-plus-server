@@ -13,7 +13,7 @@ let Responses = sequelize.define('responses', {
   },
   description: {
     type: Sequelize.STRING(200),
-    allowNull: true,
+    allowNull: false,
     comment: 'responses description',
   },
   type: {

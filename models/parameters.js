@@ -13,7 +13,7 @@ let Parameters = sequelize.define('parameters', {
   },
   description: {
     type: Sequelize.STRING(200),
-    allowNull: true,
+    allowNull: false,
     comment: 'parameter description',
   },
   required: {

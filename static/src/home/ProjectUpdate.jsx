@@ -2,16 +2,16 @@
 import React from 'react';
 import { Card } from 'antd';
 
-export default class ProcjectsDocs extends React.Component {
+export default class ProjectUpdate extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     return <div>
-      <Card title="项目文档">
-        ProcjectsDocs
-      </Card>
+      <Card title="编辑项目">
+        ProjectsUpdate
+      </Card>   
     </div>;
   }
 }

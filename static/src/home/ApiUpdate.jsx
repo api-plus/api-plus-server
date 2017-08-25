@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card } from 'antd';
 
-export default class ApisUpdate extends React.Component {
+export default class ApiUpdate extends React.Component {
   constructor(props) {
     super(props);
   }

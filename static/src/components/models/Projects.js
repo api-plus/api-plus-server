@@ -1,16 +1,16 @@
 import Ajax from '../ajax';
 
-class Apis {
+class Projects {
   store = {};
 
   async get(id) {
     if (this.store[id]) {
       return this.store[id];
     } else {
-      let api = (await Ajax.get('/apis/' + id)).data;
+      let api = (await Ajax.get('/projects/' + id)).data;
       return this.store[id] = api;
     }
   }
 }
 
-export default new Apis();
+export default new Projects();

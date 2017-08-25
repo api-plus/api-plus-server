@@ -1,40 +1,39 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { array, func } from 'prop-types';
 import { Button, Card, Dropdown, Icon, Input, Menu, Tree } from 'antd';
 const Search = Input.Search;
 const InputGroup = Input.Group;
 const TreeNode = Tree.TreeNode;
 
-import Ajax from '../components/ajax';
 
 export default class ProjectsMenu extends React.Component {
   static propTypes = {
+    projects: array.isRequired,
     onProjectCreateClicked:func.isRequired, 
     onProjectDeleted:func.isRequired, 
     onProjectEditClicked: func.isRequired,
     onProjectSelectClicked:func.isRequired, 
     onApiCreateClicked: func.isRequired,
-    onApiDeleted: func.isRequired,
     onApiEditClicked: func.isRequired,
     onApiSelectClicked: func.isRequired,
   }
 
   constructor(props) {
     super(props);
-    this.state = {
-      projects: [],
-      expandedKeys: []
-    }
-    this.loadData();
+    // this.state = {
+    //   projects: [],
+    //   expandedKeys: []
+    // }
+    // this.loadData();
   }
 
-  async loadData() {
-    let data = await Ajax.get('/projects');
-    this.setState({
-      projects: data.data,
-      expandedKeys: data.data.map(project => `project-${project.id.toString()}`)
-    });
-  }
+  // async loadData() {
+  //   let data = await Ajax.get('/projects');
+  //   this.setState({
+  //     projects: data.data,
+  //     expandedKeys: data.data.map(project => `project-${project.id.toString()}`)
+  //   });
+  // }
 
   onCreate = ({key}) => {
     if (key === 'project') {
@@ -46,6 +45,9 @@ export default class ProjectsMenu extends React.Component {
 
   onSelect = (selectedKeys, info) => {
     let selectedKey = selectedKeys[0];
+    if (!selectedKey) {
+      return;
+    }
     let splitArr = selectedKey.split('-');
     let type = splitArr[0];
     let id = splitArr[1];
@@ -57,28 +59,31 @@ export default class ProjectsMenu extends React.Component {
   }
 
   render() {
+    const projects = this.props.projects;
+    const expandedKeys = projects.map(project => `project-${project.id.toString()}`);
+
     const menu = (
       <Menu onClick={this.onCreate}>
         <Menu.Item key="api"><Icon type="file-add" /> 新建接口</Menu.Item>
         <Menu.Item key="project"><Icon type="folder-add" /> 新建项目</Menu.Item>
       </Menu>
     );
-
     const dropdown = (
       <Dropdown overlay={menu} trigger={['click']}>
         <Icon type="plus-circle-o" />
       </Dropdown>
     );
+
     return (
       <div className="component-projects-menu">
         <Card title="接口管理" extra={dropdown}>
           <Search />
           <Tree
             showLine
-            expandedKeys={this.state.expandedKeys}
+            expandedKeys={expandedKeys}
             onSelect={this.onSelect}
           >
-            {this.state.projects.map(project => {
+            {projects.map(project => {
               return <TreeNode title={project.name} key={`project-${project.id}`}>
                 {project.apis.map(api => {
                   return <TreeNode title={api.path} key={`api-${api.id}`} />

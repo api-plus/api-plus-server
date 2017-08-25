@@ -16,10 +16,15 @@ let APIs = sequelize.define('apis', {
     allowNull: true,
     comment: 'api description',
   },
-  schemes: {
+  scheme: {
     type: Sequelize.STRING(20),
     allowNull: true,
     comment: 'request schemas: http | https',
+  },
+  method: {
+    type: Sequelize.STRING(10),
+    allowNull: true,
+    comment: 'request method: GET | POST | DELETE | PUT',
   },
   consumes: {
     type: Sequelize.STRING(100),
