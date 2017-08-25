@@ -34,7 +34,7 @@ app.use(async function (ctx, next) {
 });
 
 /* static */
-app.use(Static('./static', {
+app.use(Static('./static/build', {
   prefix: '/static'
 }));
 

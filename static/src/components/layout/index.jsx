@@ -101,7 +101,7 @@ export default class Homepage extends React.Component {
         </Content>
         <Footer className="layout-footer">
           <ul>
-            <li>万达网络科技集团 | 版权所有 | 关于我们</li>
+            <li>万达网络科技集团 - 大数据中心 - 数据工程部</li>
             <li>Copyright &copy; Wanda. All Rights Reserved</li>
           </ul>
         </Footer>
