@@ -41,7 +41,7 @@ class ApiDocs extends React.Component {
         <p>{api.description}</p>
         <h3>基本信息</h3>
         <p>请求方式：{api.method}，协议：{api.scheme}，数据格式：{api.consumes}</p>
-        <h3>请求参数</h3>
+        {api.parameters && api.parameters.length !== 0 && <h3>请求参数</h3>}
         <ul>
           {api.parameters && api.parameters.map(param => {
             return <li key={param.id}>
@@ -53,7 +53,7 @@ class ApiDocs extends React.Component {
             </li>
           })}
         </ul>
-        <h3>返回内容</h3>
+        {api.responses && api.responses.length !== 0 && <h3>返回格式</h3>}
         <ul>
           {api.responses && api.responses.map(res => {
             return <li key={res.id}>

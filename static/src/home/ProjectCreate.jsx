@@ -77,17 +77,17 @@ class ProjectForm extends React.Component {
       </FormItem>
       <FormItem {...itemLayout} label="线上环境">
         {getFieldDecorator('production')(
-        <Input placeholder="线上环境地址，如 http://{host}:{port}" />
+          <Input placeholder="线上环境地址，如 http://{host}:{port}" />
         )}
       </FormItem>
       <FormItem {...itemLayout} label="测试环境">
         {getFieldDecorator('testing')(
-        <Input placeholder="测试环境地址，如 http://{host}:{port}" />
+          <Input placeholder="测试环境地址，如 http://{host}:{port}" />
         )}
       </FormItem>
       <FormItem {...itemLayout} label="开发环境">
         {getFieldDecorator('development')(
-        <Input placeholder="开发环境地址，如 http://{host}:{port}" />
+          <Input placeholder="开发环境地址，如 http://{host}:{port}" />
         )}
       </FormItem>
     </Form>;
