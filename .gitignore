@@ -1,4 +1,7 @@
 .vscode
 .DS_Store
-sqlite/data.sqlite
+
 node_modules/
+static/build/development
+static/build/testing
+sqlite/data.sqlite
