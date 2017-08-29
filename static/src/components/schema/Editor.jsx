@@ -38,19 +38,16 @@ export default class Editor extends React.Component {
     if (props.schemaType === 'response' && !schema) {
       schema = {
         "code": {
-          "path": "/code",
           "name": "code",
           "type": "string",
           "description": "成功或失败的代码"
         },
         "message": {
-          "path": "/message",
           "name": "message",
           "type": "string",
           "description": "失败的描述信息"
         },
         "data": {
-          "path": "/data",
           "name": "data",
           "type": "object",
           "description": "返回的数据实体",
@@ -60,7 +57,6 @@ export default class Editor extends React.Component {
     } else if (props.schemaType === 'request' && !schema) {
       schema = {
         "name": {
-          "path": "/name",
           "name": "name",
           "type": "string",
           "isRequired": "false",
@@ -69,6 +65,7 @@ export default class Editor extends React.Component {
         }
       };
     }
+    schema = this.setPath(schema, '/');
     this.state = {
       schema
     }
@@ -152,7 +149,18 @@ export default class Editor extends React.Component {
         result = result[path];
       }
     });
-    return result.type.includes('object') ? result.properties : result;
+    return (result.type && result.type.includes('object')) ? result.properties : result;
+  }
+
+  setPath(obj, basePath) {
+    // let result = {};
+    Object.entries(obj).forEach(([key, value]) => {
+      value.path = (basePath === '/' ? '' : basePath) + '/' + key;
+      if(value.type && value.type.includes('object')) {
+        this.setPath(value.properties, value.path);
+      }
+    });
+    return obj;
   }
 
   changeKey(obj) {

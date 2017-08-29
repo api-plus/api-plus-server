@@ -77,7 +77,7 @@ export default class ProjectsMenu extends React.Component {
     return (
       <div className="component-projects-menu">
         <Card title="接口管理" extra={dropdown}>
-          <Search />
+          {/*<Search />*/}
           <Tree
             showLine
             expandedKeys={expandedKeys}

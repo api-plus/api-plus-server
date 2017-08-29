@@ -79,16 +79,22 @@ class ApiCard extends React.Component {
       this.props.onApiDeleted(this.props.id);
     });
   }
+  onApiUpdateClicked = () => {
+    this.props.onApiUpdateClicked(this.props.id);
+  }
 
   render() {
-    const popConfirm = (
-      <Popconfirm placement="left" title="确定删除吗？" onConfirm={this.onDeleteClicked}>
-        <Icon type="delete" />
-      </Popconfirm>
+    const extra = (
+      <div>
+        <a className="extra-btn" onClick={this.onApiUpdateClicked}><Icon type="edit" /></a>
+        <Popconfirm placement="left" title="确定删除吗？" onConfirm={this.onDeleteClicked}>
+          <a className="extra-btn"><Icon type="delete" /></a>
+        </Popconfirm>
+      </div>
     );
 
-    return <div>
-      <Card title="接口文档" extra={popConfirm}>
+    return <div className="component-api-docs">
+      <Card title="接口文档" extra={extra}>
         <ApiDocs {...this.props} />
       </Card>   
     </div>;

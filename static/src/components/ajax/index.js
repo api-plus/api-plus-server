@@ -4,7 +4,7 @@
 */
 import 'whatwg-fetch';
 import HttpStatus from 'http-status';
-import jqueryParam from 'jquery-param';
+import qs from 'querystring';
 import Cookies from 'js-cookie';
 
 import { Modal } from 'antd';
@@ -21,9 +21,9 @@ export default class Ajax {
 
     if (typeof options.params === 'object') {
       if (url.indexOf('?') < 0) {
-        url += `?${jqueryParam(options.params)}`;
+        url += `?${qs.stringify(options.params)}`;
       } else {
-        url += `&${jqueryParam(options.params)}`;
+        url += `&${qs.stringify(options.params)}`;
       }
       delete options.params;
     }
@@ -40,13 +40,27 @@ export default class Ajax {
     options.method = 'POST';
 
     if (typeof options.body === 'object') {
-      options.body = jqueryParam(options.body);
+      options.body = qs.stringify(options.body);
     }
     return Ajax.request(url, options);
   }
 
   /*
-    注意：参数通过options.params传递，例如Ajax.get(url, {params: {id:9527}})
+    注意：参数通过options.body传递，例如Ajax.put(url, {body: {id:9527}})
+  */
+  static put(url, options = {}) {
+    if (!url) url = '/';
+    if (!options) options = {};
+    options.method = 'PUT';
+
+    // if (typeof options.body === 'object') {
+      options.body = JSON.stringify(options.body);
+    // }
+    return Ajax.request(url, options);
+  }
+
+  /*
+    注意：参数通过options.params传递，例如Ajax.del(url, {params: {id:9527}})
   */
   static del(url, options = {}) {
     if (!url) url = '/';
@@ -55,9 +69,9 @@ export default class Ajax {
 
     if (typeof options.params === 'object') {
       if (url.indexOf('?') < 0) {
-        url += `?${jqueryParam(options.params)}`;
+        url += `?${qs.stringify(options.params)}`;
       } else {
-        url += `&${jqueryParam(options.params)}`;
+        url += `&${qs.stringify(options.params)}`;
       }
       delete options.params;
     }
@@ -72,7 +86,7 @@ export default class Ajax {
     options = Object.assign({
       headers: {
         'Accept': 'application/json',
-        'Content-Type': options.method === 'POST' ? 'application/x-www-form-urlencoded' : 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': Cookies.get('Authorization') || ''
       },
       credentials: 'include', // 要这样设置才能带上cookie

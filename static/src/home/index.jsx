@@ -19,8 +19,8 @@ class Home extends React.Component {
     super();
     this.state = {
       projects: [], // 指定左侧接口管理的数据
-      component: 'apiCreate', // 指定右侧加载的组件类型
-      currentApiId: null,
+      component: 'apiUpdate', // 指定右侧加载的组件类型
+      currentApiId: (2).toString(),
       currentProjectId: null,
     }
     this.loadProjects();
@@ -90,6 +90,14 @@ class Home extends React.Component {
     });
   }
 
+  onApiUpdated = (projectId, api) => {
+    this.setState({ 
+      currentApiId: api.id.toString(),
+      currentProjectId: null,
+      component: 'apiDocs'
+    });
+  }
+
   onApiCreated = (projectId, api) => {
     let projects = [...this.state.projects];
     projects.forEach(p => {
@@ -100,11 +108,20 @@ class Home extends React.Component {
     this.setState({ 
       projects,
       currentApiId: api.id.toString(),
+      currentProjectId: null,
       component: 'apiDocs'
     });
   }
   onProjectCreated = (project) => {
-    console.log('created project:', project);
+    let projects = [...this.state.projects];
+    project.apis = [];
+    projects.push(project);
+    this.setState({ 
+      projects,
+      currentApiId: null,
+      currentProjectId: project.id.toString(),
+      component: 'projectDocs'
+    });
   }
 
 	render() {
@@ -126,9 +143,9 @@ class Home extends React.Component {
             />
           </Col>
           <Col span={18}>
-            {(component === 'apiDocs') && <ApiDocs onApiDeleted={this.onApiDeleted} id={currentApiId}/>}
+            {(component === 'apiDocs') && <ApiDocs onApiDeleted={this.onApiDeleted} onApiUpdateClicked={this.onShowApiEdit} id={currentApiId}/>}
             {(component === 'apiCreate') && <ApiCreate onApiCreated={this.onApiCreated} projects={projects}/>}
-            {(component === 'apiUpdate') && <ApiUpdate id={currentApiId} />}
+            {(component === 'apiUpdate') && <ApiUpdate onApiUpdated={this.onApiUpdated} projects={projects} id={currentApiId} />}
             {(component === 'projectDocs') && <ProjectDocs id={currentProjectId} />}
             {(component === 'projectCreate') && <ProjectCreate onProjectCreated={this.onProjectCreated}/>}
             {(component === 'projectUpdate') && <ProjectUpdate id={currentProjectId} />}
