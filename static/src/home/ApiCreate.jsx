@@ -45,6 +45,7 @@ export default class ApiCreate extends React.Component {
     //   });
     // });
     console.log(this.parametersEditor.get());
+    console.log(this.responsesEditor.get());
   }
 
   saveFormRef = (form) => {
@@ -52,6 +53,9 @@ export default class ApiCreate extends React.Component {
   }
   saveParametersRef = (parameters) => {
     this.parametersEditor = parameters;
+  }
+  saveResponsesRef = (responses) => {
+    this.responsesEditor = responses;
   }
 
   render() {
@@ -65,9 +69,15 @@ export default class ApiCreate extends React.Component {
         <h3>基本信息</h3>
         <WrappedApiForm ref={this.saveFormRef} projects={this.props.projects} />
         <h3>请求参数</h3>
-        <ParameterEditor ref={this.saveParametersRef} parameters={[]} />
+        {/*<ParameterEditor ref={this.saveParametersRef} parameters={[]} />*/}
+        <SchemaEditor 
+          ref={this.saveParametersRef}
+          showPreviewer={false}
+          showAddParamBtn={true}
+          schemaType="request"
+        />
         <h3>返回格式</h3>
-        <SchemaEditor ref={this.saveSchemaRef} schema={{}} />
+        <SchemaEditor ref={this.saveResponsesRef} />
         <br />
         <Button type="primary" size="large" onClick={this.onSave}>保存</Button>
       </Card>
