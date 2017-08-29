@@ -58,16 +58,12 @@ exports.Get = async function(ctx) {
   let results = null;
   let id = ctx.params.id;
   if (id) {
-    results = await APIs.findById(id, {
-      include: [ Parameters, Responses ]
-    });
+    results = await APIs.findById(id);
     if (!results) {
       throw ErrorCode.NotFoundError('id = ' + id);
     }
   } else {
-    results = await APIs.findAll({
-      include: [ Parameters, Responses ]
-    });
+    results = await APIs.findAll();
   }
 
   ctx.body = success(results);

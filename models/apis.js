@@ -36,6 +36,16 @@ let APIs = sequelize.define('apis', {
     allowNull: true,
     comment: 'request content type',
   },
+  parameters: {
+    type: Sequelize.JSON,
+    allowNull: true,
+    comment: 'request parameters schema',
+  },
+  response: {
+    type: Sequelize.JSON,
+    allowNull: true,
+    comment: 'response schema',
+  },
 }, {
   tableName: 'apis',
   comment: 'apis',

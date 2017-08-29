@@ -23,7 +23,7 @@ let Parameters = sequelize.define('parameters', {
     comment: 'is parameter required',
   },
   type: {
-    type: Sequelize.ENUM('string', 'boolean', 'int', 'timestamp', 'datetime', 'object', 'array', 'long', 'float'),
+    type: Sequelize.ENUM('string', 'boolean', 'number', 'timestamp', 'datetime', 'object', 'array'),
     allowNull: false,
     defaultValue: 'string',
     comment: 'parameter type',

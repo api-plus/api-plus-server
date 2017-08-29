@@ -22,19 +22,19 @@ module.exports = function(app) {
   router.get('/apis', Api.Get);
   router.get('/apis/:id', Api.Get);
 
-  router.post('/parameters', Parameters.Post);
-  router.del('/parameters/:id', Parameters.Del);
-  router.put('/parameters', Parameters.Put);
-  router.put('/parameters/:id', Parameters.Put);
-  router.get('/parameters', Parameters.Get);
-  router.get('/parameters/:id', Parameters.Get);
+  // router.post('/parameters', Parameters.Post);
+  // router.del('/parameters/:id', Parameters.Del);
+  // router.put('/parameters', Parameters.Put);
+  // router.put('/parameters/:id', Parameters.Put);
+  // router.get('/parameters', Parameters.Get);
+  // router.get('/parameters/:id', Parameters.Get);
 
-  router.post('/responses', Responses.Post);
-  router.del('/responses/:id', Responses.Del);
-  router.put('/responses', Responses.Put);
-  router.put('/responses/:id', Responses.Put);
-  router.get('/responses', Responses.Get);
-  router.get('/responses/:id', Responses.Get);
+  // router.post('/responses', Responses.Post);
+  // router.del('/responses/:id', Responses.Del);
+  // router.put('/responses', Responses.Put);
+  // router.put('/responses/:id', Responses.Put);
+  // router.get('/responses', Responses.Get);
+  // router.get('/responses/:id', Responses.Get);
 
   app.use(router.routes()).use(router.allowedMethods());
 }

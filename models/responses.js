@@ -17,7 +17,7 @@ let Responses = sequelize.define('responses', {
     comment: 'responses description',
   },
   type: {
-    type: Sequelize.ENUM('string', 'boolean', 'int', 'timestamp', 'datetime', 'object', 'array', 'long', 'float'),
+    type: Sequelize.ENUM('string', 'boolean', 'number', 'timestamp', 'datetime', 'object', 'array', 'long', 'float'),
     allowNull: false,
     defaultValue: 'string',
     comment: 'responses type',
