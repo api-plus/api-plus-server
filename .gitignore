@@ -5,3 +5,4 @@ node_modules/
 static/build/development
 static/build/testing
 sqlite/data.sqlite
+config/production.js

@@ -3,8 +3,8 @@ const router = require('koa-router')();
 
 const Projects = require('./controllers/projects');
 const Api = require('./controllers/apis');
-const Parameters = require('./controllers/Parameters');
-const Responses = require('./controllers/responses');
+// const Parameters = require('./controllers/parameters');
+// const Responses = require('./controllers/responses');
 
 module.exports = function(app) {
 

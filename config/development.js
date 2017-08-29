@@ -4,8 +4,8 @@ const appRoot = path.dirname(__dirname);
 module.exports = {
   appRoot: appRoot,
 
-  /**
-   * database config
+  /*
+    database config
    */
   database: {
     db: 'api_manager_dev',
