@@ -31,21 +31,21 @@ export default class ApiCreate extends React.Component {
   }
 
   onSave = () => {
-    // this.form.validateFields((err, values) => {
-    //   if (err) {
-    //     return;
-    //   }
-    //   let { project_id, path, description, method, scheme, consumes } = values;
-    //   Ajax.post('/apis', {
-    //     body: {
-    //       project_id, path, description, method, scheme, consumes
-    //     }
-    //   }).then((data) => {
-    //     this.props.onApiCreated(project_id, data.data);
-    //   });
-    // });
-    console.log(this.parametersEditor.get());
-    console.log(this.responsesEditor.get());
+    this.form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      let { project_id, path, description, method, scheme, consumes } = values;
+      Ajax.post('/apis', {
+        body: {
+          project_id, path, description, method, scheme, consumes,
+          parameters: this.parametersEditor.get(),
+          response: this.responsesEditor.get()
+        }
+      }).then((data) => {
+        this.props.onApiCreated(project_id, data.data);
+      });
+    });
   }
 
   saveFormRef = (form) => {

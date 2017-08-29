@@ -7,13 +7,14 @@ import { bool, object, string } from 'prop-types';
 import { Button, Col, Icon, Input, Row, Select, Tabs } from 'antd';
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
+import Previewer from './Previewer';
 
 import './Editor.less';
 
 // const
 const Field_Types = {
-  request: ['string', 'boolean', 'number'],
-  response: ['string', 'boolean', 'number', 'object'],
+  request: ['string', 'number', 'boolean'],
+  response: ['string', 'number', 'boolean', 'object', 'array[string]', 'array[number]', 'array[boolean]', 'array[object]'],
 }
 
 /* proptypes */
@@ -130,7 +131,7 @@ export default class Editor extends React.Component {
     let newSchema = {...this.state.schema};
     let parent = this.getByPath(newSchema, basePath);
     parent[key][prop] = value;
-    if (prop === 'type' && value === 'object') {
+    if (prop === 'type' && value.includes('object')) {
       parent[key].properties = {};
     }
     this.setState({
@@ -145,20 +146,20 @@ export default class Editor extends React.Component {
     let result = obj;
     pathArr.forEach(path => {
       if (!path) return;
-      if (result.type === 'object') {
+      if (result.type && result.type.includes('object')) {
         result = result.properties[path];
       } else {
         result = result[path];
       }
     });
-    return result.type === 'object' ? result.properties : result;
+    return result.type.includes('object') ? result.properties : result;
   }
 
   changeKey(obj) {
     let result = {};
     Object.entries(obj).forEach(([key, value]) => {
       value = {...value};
-      if (value.type === 'object') {
+      if (value.type.includes('object')) {
         value.properties = this.changeKey(value.properties);
       }
       delete value.path;
@@ -188,8 +189,6 @@ export default class Editor extends React.Component {
     return <div className="component-editor">
       <Row gutter={10}>
         <Col span={showPreviewer ? 16 : 24}>
-          <Tabs defaultActiveKey="1" size="small">
-            <TabPane tab="编辑" key="1">
               <div className="form">
               {
                 schemaType === 'response' && 
@@ -218,8 +217,6 @@ export default class Editor extends React.Component {
                   onCreate={this.onCreate} onDelete={this.onDelete}
                 />
               </div>
-            </TabPane>
-          </Tabs>
         </Col>
         <Col span={showPreviewer ? 8 : 0}>
           <Tabs defaultActiveKey="1" size="small">
@@ -266,7 +263,6 @@ class SchemaForm extends React.Component {
           onChange={this.onChange.bind(this, item, 'type')}
         >
           {Field_Types[schemaType].map(type => {
-
             return <Option key={type}>{type}</Option>
           })}
         </Select>
@@ -302,7 +298,7 @@ class SchemaForm extends React.Component {
       <Col span={2}>
         <a className="item-btn" onClick={this.onDelete.bind(this, item.path)}><Icon type="delete"></Icon></a>
         {
-          item.type === 'object' && 
+          item.type.includes('object') && 
           <a className="item-btn" onClick={this.onCreate.bind(this, item.path)}>
             <Icon type="plus-circle-o"></Icon>
           </a>
@@ -316,10 +312,12 @@ class SchemaForm extends React.Component {
       {Object.entries(item).map(([key, value]) => {
         return <div key={key}>
           {this.renderItem(value)}
-          {(value.type === 'object') && <div className="left-space-15">
-            {/*<SchemaForm item={value.properties} />*/}
-            {this.renderForm(value.properties)}
-          </div>}
+          {
+            (value.type.includes('object')) && 
+            <div className="left-space-15">
+              {this.renderForm(value.properties)}
+            </div>
+          }
         </div>;
       })}
     </div>
@@ -335,27 +333,4 @@ class SchemaForm extends React.Component {
       }
     </div>
   }
-}
-
-/* panel previewer */
-function Previewer(props) {
-
-  function formatSchema(schema) {
-    let result = {};
-    Object.entries(schema).forEach(([key, value]) => {
-      if (value.type === 'object') {
-        result[value.name] = formatSchema(value.properties);
-      } else if (value.type === 'array') {
-        result[value.name] = [];
-      } else {
-        // result[key] = `@${value.type} - ${value.description}`;
-        result[value.name] = value.type;
-      }
-    });
-    return result;
-  }
-
-  let { schema } = props;
-  let json = formatSchema(schema);
-  return <pre>{JSON.stringify(json, null, 4)}</pre>
 }
