@@ -10903,6 +10903,12 @@ textarea.ant-pagination-options-quick-jumper input {
 .component-schema-previewer .ant-table-tbody > tr:hover > td {
   background-color: #fff;
 }
+.component-api-docs h2 {
+  margin: 0 0 10px 0;
+}
+.component-api-docs h3 {
+  margin: 10px 0;
+}
 .component-api-docs .extra-btn {
   margin: 2px;
   padding: 3px;

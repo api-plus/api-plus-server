@@ -13,15 +13,15 @@ import ApiUpdate from './ApiUpdate';
 import ApiDocs from './ApiDocs';
 
 import './index.less';
-import '../../assets/images/logo.png';
+import logo from '../../assets/images/logo.png';
 
 class Home extends React.Component {
   constructor() {
     super();
     this.state = {
       projects: [], // 指定左侧接口管理的数据
-      component: 'apiUpdate', // 指定右侧加载的组件类型
-      currentApiId: (2).toString(),
+      component: null, // 指定右侧加载的组件类型
+      currentApiId: null,
       currentProjectId: null,
     }
     this.loadProjects();
