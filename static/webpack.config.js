@@ -130,7 +130,7 @@ let webpackConfig = {
       ])
     }, {
       // 图片。将 30KB 以下的图片用 data-url 的 base64 加载，超出 30KB 的图片将使用 file-loader 保存为文件
-      test: /\.(png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/i,
+      test: /\.(png|jpg|jpeg|gif|ico)(\?v=\d+\.\d+\.\d+)?$/i,
       use: { loader:'url-loader', options: { 
         limit: 10000,
         name: pathConfig.imageFile // 指定文件名

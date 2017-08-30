@@ -6990,12 +6990,12 @@ samp {
 }
 .layout-header {
   padding: 0 40px;
-  height: 70px;
-  background-color: #fff;
+  height: 60px;
+  background-color: #101010;
 }
 .layout-header .layout-brand {
   height: 36px;
-  margin-top: 17px;
+  margin-top: 12px;
   float: left;
 }
 .layout-header .layout-brand a {
@@ -7004,8 +7004,8 @@ samp {
   height: 36px;
   color: #333;
   font-size: 24px;
-  background: url(/0.1.0/assets/images/brand.png);
-  background-image: -webkit-image-set(url(/0.1.0/assets/images/brand.png) 1x, url(/0.1.0/assets/images/brand_2x.png) 2x);
+  background: url(/0.1.0/assets/images/brand-light.png);
+  background-image: -webkit-image-set(url(/0.1.0/assets/images/brand-light.png) 1x, url(/0.1.0/assets/images/brand-light_2x.png) 2x);
 }
 .layout-header .layout-menu {
   line-height: 70px;
@@ -11456,6 +11456,9 @@ textarea.ant-pagination-options-quick-jumper input {
 }
 h3 {
   margin: 10px 0;
+}
+.ant-card-head {
+  border-bottom: 1px solid #a0a0a0;
 }
 .component-project-docs .component-api-docs {
   margin-top: 10px;
