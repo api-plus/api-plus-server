@@ -40,7 +40,7 @@ export default class Ajax {
     options.method = 'POST';
 
     if (typeof options.body === 'object') {
-      options.body = qs.stringify(options.body);
+      options.body = JSON.stringify(options.body);
     }
     return Ajax.request(url, options);
   }
@@ -53,9 +53,9 @@ export default class Ajax {
     if (!options) options = {};
     options.method = 'PUT';
 
-    // if (typeof options.body === 'object') {
+    if (typeof options.body === 'object') {
       options.body = JSON.stringify(options.body);
-    // }
+    }
     return Ajax.request(url, options);
   }
 
