@@ -46,7 +46,7 @@ router(app);
 
 /* 启动 Server */
 let port = process.env.PORT || 8080;
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log('Api Manager started on:', color.green(`http://127.0.0.1:${port}/`));
   console.log('Api Manager pid:', color.green(process.pid));
 });
