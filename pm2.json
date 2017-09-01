@@ -1,0 +1,13 @@
+{
+  "name"        : "api-manager",  // 应用名称
+  "script"      : "./server.js",  // 实际启动脚本
+  "cwd"         : "./",  // 当前工作路径
+  "error_file" : "./logs/app-err.log",  // 错误日志路径
+  "out_file"   : "./logs/app-out.log",  // 普通日志路径
+  "env": {
+      "NODE_ENV": "development"  // 环境参数，当前指定为开发环境
+  },
+  "env_production": {
+      "NODE_ENV": "production"  // 环境参数，当前指定为生产环境
+  }
+}

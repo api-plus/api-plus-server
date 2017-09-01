@@ -1,8 +1,9 @@
 .vscode
 .DS_Store
-
-node_modules/
-static/build/development
-static/build/testing
 sqlite/data.sqlite
 config/production.js
+
+logs/
+node_modules/
+static/build/development/
+static/build/testing/
