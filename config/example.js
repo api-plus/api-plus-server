@@ -41,5 +41,5 @@ module.exports = {
     output: warn, error
     ignore: log, trace, debug, info
   */
-  logLever: 'warn', 
+  logLevel: 'warn', 
 }

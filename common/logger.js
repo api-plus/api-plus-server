@@ -3,6 +3,7 @@ const Tracer = require('tracer');
 const config = require('../config');
 
 let opts = {
+  level: config.logLevel,
   format: "{{timestamp}} <{{title}}> ({{file}}:{{line}}) {{message}}",
   preprocess: function(data) {
     data.title = data.title.toUpperCase();

@@ -40,5 +40,5 @@ module.exports = {
     
     output: log, trace, debug, info, warn, error
   */
-  logLever: 'log', 
+  logLevel: 'log', 
 }
