@@ -70,7 +70,7 @@ export default class ProjectsMenu extends React.Component {
     );
     const dropdown = (
       <Dropdown overlay={menu} trigger={['click']}>
-        <Icon type="plus-circle-o" />
+        <a className="extra-btn"><Icon type="plus-circle-o" /></a>
       </Dropdown>
     );
 

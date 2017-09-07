@@ -8,6 +8,17 @@ import { Button, Col, Icon, Input, Row, Select, Tabs } from 'antd';
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
 import Previewer from './Previewer';
+import Import from './Import';
+/*let schema = Json2Schema({
+  "code": 0,
+  "info": "success",
+  "data": {
+    "product": {
+      "id": 1,
+      "name": "iphone",
+    }
+  }
+});*/
 
 import './Editor.less';
 
@@ -23,11 +34,13 @@ const PropTypes = {
   schemaType: string,
   showAddParamBtn: bool,
   showPreviewer: bool,
+  showImport: bool,
 }
 const DefaultProps = {
   schemaType: 'response',
   showAddParamBtn: false,
   showPreviewer: true,
+  showImport: false
 }
 
 /* component */
@@ -67,6 +80,7 @@ export default class Editor extends React.Component {
     }
     schema = this.setPath(schema, '/');
     this.state = {
+      editorActiveKey: '1',
       schema
     }
   }
@@ -136,6 +150,17 @@ export default class Editor extends React.Component {
     });
   }
 
+  onImport = (schema) => {
+    this.setState({ 
+      schema: this.setPath(schema, '/'),
+      editorActiveKey: '1', 
+    });
+  }
+
+  onEditorTabChanged = (key) => {
+    this.setState({ editorActiveKey:key })
+  }
+
   getByPath(obj, path) {
     if (path === '/') return obj;
 
@@ -192,11 +217,17 @@ export default class Editor extends React.Component {
   }
 
   render() {
-    const { schema } = this.state;
-    const { schemaType, showPreviewer, showAddParamBtn } = this.props;
+    const { schema, editorActiveKey } = this.state;
+    const { schemaType, showPreviewer, showAddParamBtn, showImport } = this.props;
     return <div className="component-editor">
       <Row gutter={10}>
         <Col span={showPreviewer ? 16 : 24}>
+          <Tabs 
+            activeKey={editorActiveKey} 
+            animated={false} size="small"
+            onChange={this.onEditorTabChanged}
+          >
+            <TabPane tab="编辑" key="1">
               <div className="form">
               {
                 schemaType === 'response' && 
@@ -225,6 +256,15 @@ export default class Editor extends React.Component {
                   onCreate={this.onCreate} onDelete={this.onDelete}
                 />
               </div>
+            </TabPane>
+            { 
+              showImport ? 
+              <TabPane tab="导入" key="2">
+                <Import onImport={this.onImport} />
+              </TabPane> : 
+              null 
+            }
+          </Tabs>
         </Col>
         <Col span={showPreviewer ? 8 : 0}>
           <Tabs defaultActiveKey="1" size="small">

@@ -14,7 +14,6 @@ const TextArea = Input.TextArea;
 /* internal modules */
 import Ajax from '../components/ajax';
 import SchemaEditor from '../components/schema/Editor';
-import ParameterEditor from './ParameterEditor';
 
 /* styles */
 
@@ -69,7 +68,6 @@ export default class ApiCreate extends React.Component {
         <h3>基本信息</h3>
         <WrappedApiForm ref={this.saveFormRef} projects={this.props.projects} />
         <h3>请求参数</h3>
-        {/*<ParameterEditor ref={this.saveParametersRef} parameters={[]} />*/}
         <SchemaEditor 
           ref={this.saveParametersRef}
           showPreviewer={false}
@@ -77,7 +75,7 @@ export default class ApiCreate extends React.Component {
           schemaType="request"
         />
         <h3>返回格式</h3>
-        <SchemaEditor ref={this.saveResponsesRef} />
+        <SchemaEditor ref={this.saveResponsesRef} showImport={true} />
         <br />
         <Button type="primary" size="large" onClick={this.onSave}>保存</Button>
       </Card>
