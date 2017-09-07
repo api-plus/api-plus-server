@@ -6,7 +6,7 @@ const path = require('path');
 
 const color = require('colorful');
 const Koa = require('koa');
-const Static = require('koa-static-cache');
+const Static = require('koa-static');
 const BodyParser = require('koa-bodyparser');
 
 const router = require('./router.js');
@@ -34,9 +34,8 @@ app.use(async function (ctx, next) {
 });
 
 /* static */
-app.use(Static('./static/build/production', {
-  prefix: '/'
-}));
+app.use(Static('./static/build/production'));
+app.use(Static('./static/build/production/pages/home'));
 
 /* body */
 app.use(BodyParser());
