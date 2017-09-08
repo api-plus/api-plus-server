@@ -175,6 +175,7 @@ class ApiForm extends React.Component {
               <Select>
                 <Option key="http">http</Option>
                 <Option key="https">https</Option>
+                <Option key="websocket">Web Socket</Option>
               </Select>
             )}
           </FormItem>
