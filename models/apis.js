@@ -51,7 +51,7 @@ let APIs = sequelize.define('apis', {
   comment: 'apis',
   indexes: [{
     unique: true,
-    fields: ['path', 'project_id']
+    fields: ['path', 'method', 'project_id']
   }, {
     fields: ['gmt_modified']
   }]
