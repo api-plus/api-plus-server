@@ -86,7 +86,7 @@ export default class ProjectsMenu extends React.Component {
             {projects.map(project => {
               return <TreeNode title={project.name} key={`project-${project.id}`}>
                 {project.apis.map(api => {
-                  return <TreeNode title={api.path} key={`api-${api.id}`} />
+                  return <TreeNode title={`${api.path} ${api.method}`} key={`api-${api.id}`} />
                 })}
               </TreeNode>
             })}

@@ -34,7 +34,7 @@ export default class Previewer extends React.Component {
           result[value.name] = [type];
         }
       } else {
-        result[value.name] = value.type;
+        result[value.name] = `<${value.type}>${value.description ? ' ' : ''}${value.description}`;
       }
     });
     return result;
@@ -75,26 +75,28 @@ export default class Previewer extends React.Component {
           key: 'default',
         });
       }
-      let dataSource = Object.entries(schema).map(([key, value]) => {
-        return {
-          key: value.name,
-          name: value.name,
-          description: value.description,
-          type: value.type,
-          schema: value.properties,
-          default: value.default || '-',
-          isRequired: value.isRequired
-        }
-      });
+      let dataSource = Object.entries(schema).map(([key, value]) => ({
+        key: value.name,
+        name: value.name,
+        description: value.description,
+        type: value.type,
+        schema: value.properties,
+        default: value.default || '-',
+        isRequired: value.isRequired
+      }));
       
-      return (
-      <Table 
-        className="component-schema-previewer" 
-        size="middle" bordered={true}
-        dataSource={dataSource} columns={columns} 
-        pagination={false} 
-      />
-      );
+      if (dataSource.length) {
+        return (
+          <Table 
+            className="component-schema-previewer" 
+            size="middle" bordered={true}
+            dataSource={dataSource} columns={columns} 
+            pagination={false} 
+          />
+        );
+      } else {
+        return (<span>&lt;无&gt;</span>);
+      }
     } else {
       if (schema) {
         let json = this.jsonFormat(schema);
