@@ -1,7 +1,7 @@
 {
-  "name": "api-manager",
-  "version": "0.1.0",
-  "description": "Simple Api Manager",
+  "name": "api-plus",
+  "version": "0.2.0",
+  "description": "Api Document Manager",
   "main": "server.js",
   "scripts": {
     "sync": "node models/sync.js",

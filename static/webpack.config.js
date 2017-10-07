@@ -68,7 +68,7 @@ if (env === 'testing') {
   pathConfig.htmlBase = `./pages`;
   pathConfig.jsFile = `${pkg.version}/[name].js`;
   pathConfig.cssFile = `${pkg.version}/[name].css`;
-  commonFile: `${pkg.version}/common.js`,
+  pathConfig.commonFile = `${pkg.version}/common.js`,
   pathConfig.cleanPath = `./build/${env}/${pkg.version}`;
 }
 
@@ -118,6 +118,7 @@ let webpackConfig = {
           plugins: [
             'add-module-exports',
             'transform-runtime',
+            'transform-decorators-legacy',
             ['import', { 'libraryName':'antd', 'style':true }], // antd 按需加载
           ],
         }
