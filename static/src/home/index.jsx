@@ -13,7 +13,7 @@ import ApiUpdate from './ApiUpdate';
 import ApiDocs from './ApiDocs';
 
 import './index.less';
-import logo from '../../assets/images/logo.ico';
+import logo from 'assets/images/logo.ico';
 
 class Home extends React.Component {
   constructor() {
