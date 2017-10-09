@@ -5,9 +5,6 @@
 import 'whatwg-fetch';
 import HttpStatus from 'http-status';
 import qs from 'querystring';
-import Cookies from 'js-cookie';
-
-import { Modal } from 'antd';
 
 export default class Ajax {
 
@@ -87,30 +84,19 @@ export default class Ajax {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': Cookies.get('Authorization') || ''
       },
       credentials: 'include', // 要这样设置才能带上cookie
     }, options);
 
     return fetch(url, options).then(res => {
       if (res.status >= 200 && res.status < 300) {
-        if (res.status === 204) {
-          return { code: 0 };
-        } else {
-          return res.json();
-        }
-      } else if (res.status === 400) {
         return res.json();
       } else {
         let error = new Error(`Error: ${HttpStatus[res.status]}. Url: ${url}`);
         return Promise.reject(error);
       }
     }).then(data => {
-      if (data.code === 3) { // 用户未登录或 token 失效
-        location.href = '../login/index.html';
-      } else {
-        return data;
-      }
+      return data;
     });
   }
 }
