@@ -118,6 +118,8 @@ let webpackConfig = {
           plugins: [
             'add-module-exports',
             'transform-runtime',
+            'transform-regenerator',
+            'mobx-deep-action',
             'transform-decorators-legacy',
             ['import', { 'libraryName':'antd', 'style':true }], // antd 按需加载
           ],
