@@ -1,4 +1,4 @@
-# Api Docs
+# Api Plus
 
 ### TODO
 - schema generator: from json to schema

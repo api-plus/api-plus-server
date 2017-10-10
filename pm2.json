@@ -1,5 +1,5 @@
 {
-  "name"        : "api-manager",  // 应用名称
+  "name"        : "api-plus",  // 应用名称
   "script"      : "./server.js",  // 实际启动脚本
   "cwd"         : "./",  // 当前工作路径
   "error_file" : "./logs/app-err.log",  // 错误日志路径
