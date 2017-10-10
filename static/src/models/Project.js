@@ -39,4 +39,10 @@ export default class Project {
   static async remove(id) {
     return Ajax.del(`/projects/${id}`);
   }
+
+  static async update(project) {
+    return Ajax.put(`/projects/${project.id}`, {
+      body: project
+    });
+  }
 }

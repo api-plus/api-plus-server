@@ -55,13 +55,11 @@ export default class ProjectList {
 
   @action
   setApi(api) {
-    if (this.api.id === api.id) return;
     this.api = api;
   }
 
   @action
   setProject(project) {
-    if (this.project.id === project.id) return;
     this.project = project;
   }
 }

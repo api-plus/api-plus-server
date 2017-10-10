@@ -5,7 +5,6 @@
 
 /* third party modules */
 import React from 'react';
-import { func, array, string } from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { Button, Card, Col, Form, Input, Row, Select } from 'antd';
 const FormItem = Form.Item;
@@ -73,7 +72,7 @@ export default class ApiUpdate extends React.Component {
 
     const { projects, project, api } = this.props.projectListStore;
     return <div>
-      <Card title="新建接口">
+      <Card title="修改接口">
         <h3>基本信息</h3>
         <WrappedApiForm ref={this.saveFormRef} projects={projects} api={api} />
         <h3>请求参数</h3>
