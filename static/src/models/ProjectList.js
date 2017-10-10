@@ -2,23 +2,16 @@
 import { observable, action } from 'mobx';
 
 import Ajax from '../components/ajax';
-import Api from "./Api";
 import Project from "./Project";
 
 
-class ProjectList {
+export default class ProjectList {
   @observable projects = [];
+  @observable project = {}; // 当前选中的 project
+  @observable api = {}; // 当前选中的 api
 
   constructor() {
     this.loadProjects();
-  }
-
-  @action
-  async loadProjects() {
-    const { data } = await Ajax.get('/projects');
-    data.forEach(project => {
-      this.projects.push(new Project(project));
-    });
   }
 
   getProject(projectId) {
@@ -26,31 +19,49 @@ class ProjectList {
   }
 
   @action
-  async createProject(project) {
-    const { name, description, production, testing, development } = project;
-    const { data } = await Ajax.post('/projects', {
-      body: {
-        name, description, production, testing, development
-      }
-    });
-    this.projects.push(new Project(data));
-    return data;
+  async loadProjects() {
+    const { data } = await Project.loadAll();
+    this.projects = data.map(project => new Project(project));
   }
 
   @action
-  async createApi(api) {
-    const { project_id, path, description, method, scheme, consumes, parameters, response } = api;
-    const { data } = await Ajax.post('/apis', {
-      body: api
-    });
-    this.getProject(parseInt(project_id)).apis.push(new Api(data));
-    return data;
+  addProject(project) {
+    this.projects.push(project);
   }
 
-  // @action
-  // createApi(projectId, api) {
-  //   this.getProject(projectId).api.push(new Api(api));
-  // }
-}
+  @action
+  addApi(api) {
+    const project = this.getProject(parseInt(api.project_id));
+    project.apis.push(api);
+  }
 
-export default (new ProjectList());
+  @action
+  removeApi(id) {
+    this.projects.forEach(project => {
+      let apiIndex = project.apis.findIndex(api => api.id === parseInt(id));
+      if (apiIndex !== -1) {
+        project.apis.splice(apiIndex, 1);
+      }
+    });
+  }
+
+  @action
+  removeProject(id) {
+    let index = this.projects.findIndex(project => project.id === parseInt(id));
+    if (index !== -1) {
+      this.projects.splice(index, 1);
+    }
+  }
+
+  @action
+  setApi(api) {
+    if (this.api.id === api.id) return;
+    this.api = api;
+  }
+
+  @action
+  setProject(project) {
+    if (this.project.id === project.id) return;
+    this.project = project;
+  }
+}

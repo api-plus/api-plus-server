@@ -45,7 +45,16 @@ export default class Api {
   }
 
   static async load(id) {
-    const { data } = await Ajax.get(`/apis/${id}`);
-    return new Api(data);
+    return Ajax.get(`/apis/${id}`);
+  }
+
+  static async create(api) {
+    return Ajax.post('/apis', {
+      body: api
+    });
+  }
+
+  static async remove(id) {
+    return Ajax.del(`/apis/${id}`);
   }
 }

@@ -4,13 +4,15 @@
 
 import React from 'react';
 import { func } from 'prop-types';
+import { inject } from 'mobx-react';
 import { Button, Card, Form, Input } from 'antd';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
+import Project from '../models/Project';
 import Ajax from '../components/ajax';
-import projectListStore from '../models/ProjectList';
 
+@inject('projectListStore')
 export default class ProjectCreate extends React.Component {
   constructor(props) {
     super(props);
@@ -21,9 +23,11 @@ export default class ProjectCreate extends React.Component {
       if (err) {
         return;
       }
-      projectListStore.createProject(values)
-      .then(project => {
-        location.hash = `/project/${project.id}`;
+      
+      Project.create(values)
+      .then(({ code, data }) => {
+        this.props.projectListStore.addProject(new Project(data));
+        location.hash = `/project/${data.id}`;
       });
     });
   }
@@ -33,13 +37,15 @@ export default class ProjectCreate extends React.Component {
   }
 
   render() {
-    return <div>
-      <Card title="新建项目">
-        <WrappedProjectForm ref={this.saveFormRef}/>
-        <br />
-        <Button type="primary" size="large" onClick={this.onSave}>保存</Button>
-      </Card>
-    </div>
+    return (
+      <div>
+        <Card title="新建项目">
+          <WrappedProjectForm ref={this.saveFormRef}/>
+          <br />
+          <Button type="primary" size="large" onClick={this.onSave}>保存</Button>
+        </Card>
+      </div>
+    );
   }
 }
 
@@ -52,37 +58,39 @@ class ProjectForm extends React.Component {
       wrapperCol: { span: 22 },
     };
 
-    return <Form>
-      <FormItem {...itemLayout} label="名称">
-        {getFieldDecorator('name',{
-          rules: [{ required: true,  message: '请输入项目名称' }]
-        })(
-          <Input placeholder="项目名称" />
-        )}
-      </FormItem>
-      <FormItem {...itemLayout} label="说明">
-        {getFieldDecorator('description',{
-          rules: [{ required: true,  message: '请输入项目说明' }]
-        })(
-          <TextArea placeholder="项目说明" autosize={{ minRows: 2, maxRows: 6 }} />
-        )}
-      </FormItem>
-      <FormItem {...itemLayout} label="线上环境">
-        {getFieldDecorator('production')(
-          <Input placeholder="线上环境地址，如 http://{host}:{port}" />
-        )}
-      </FormItem>
-      <FormItem {...itemLayout} label="测试环境">
-        {getFieldDecorator('testing')(
-          <Input placeholder="测试环境地址，如 http://{host}:{port}" />
-        )}
-      </FormItem>
-      <FormItem {...itemLayout} label="开发环境">
-        {getFieldDecorator('development')(
-          <Input placeholder="开发环境地址，如 http://{host}:{port}" />
-        )}
-      </FormItem>
-    </Form>;
+    return (
+      <Form>
+        <FormItem {...itemLayout} label="名称">
+          {getFieldDecorator('name',{
+            rules: [{ required: true,  message: '请输入项目名称' }]
+          })(
+            <Input placeholder="项目名称" />
+          )}
+        </FormItem>
+        <FormItem {...itemLayout} label="说明">
+          {getFieldDecorator('description',{
+            rules: [{ required: true,  message: '请输入项目说明' }]
+          })(
+            <TextArea placeholder="项目说明" autosize={{ minRows: 2, maxRows: 6 }} />
+          )}
+        </FormItem>
+        <FormItem {...itemLayout} label="线上环境">
+          {getFieldDecorator('production')(
+            <Input placeholder="线上环境地址，如 http://{host}:{port}" />
+          )}
+        </FormItem>
+        <FormItem {...itemLayout} label="测试环境">
+          {getFieldDecorator('testing')(
+            <Input placeholder="测试环境地址，如 http://{host}:{port}" />
+          )}
+        </FormItem>
+        <FormItem {...itemLayout} label="开发环境">
+          {getFieldDecorator('development')(
+            <Input placeholder="开发环境地址，如 http://{host}:{port}" />
+          )}
+        </FormItem>
+      </Form>
+    );
   }
 }
 

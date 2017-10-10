@@ -1,18 +1,18 @@
 import React from 'react';
 import { array, func } from 'prop-types';
-import { observer } from "mobx-react";
-import { Button, Card, Dropdown, Icon, Input, Menu, Tree } from 'antd';
+import { inject, observer } from "mobx-react";
+import { Link } from 'react-router-dom';
+import { Button, Card, Dropdown, Icon, Input, Menu, Tag, Tree } from 'antd';
 const Search = Input.Search;
 const InputGroup = Input.Group;
 const TreeNode = Tree.TreeNode;
-import { Link } from 'react-router-dom';
 
-import projectListStore from '../models/ProjectList';
+import './ProjectList.less';
 
-@observer
+@inject('projectListStore') @observer
 export default class ProjectsList extends React.Component {
 
-  onSelect = (selectedKeys, info) => {
+  handleSelect = (selectedKeys, info) => {
     let selectedKey = selectedKeys[0];
     if (!selectedKey) {
       return;
@@ -27,16 +27,33 @@ export default class ProjectsList extends React.Component {
     }
   }
 
+  handleExpand = (expandedKeys) => {
+    let expandedKey = expandedKeys.pop();
+    if (!expandedKey) {
+      return;
+    }
+    let splitArr = expandedKey.split('-');
+    let type = splitArr[0];
+    let id = splitArr[1];
+    if (type === 'project') {
+      location.hash = `/project/${id}`;
+    } else {
+      location.hash = `/api/${id}`;
+    }
+  }
+
   render() {
-    const projects = projectListStore.projects;
+    const { projects, project, api } = this.props.projectListStore;
+    const selectedKey = api.id ? `api-${api.id}` : `project-${project.id}`;
+    const expandedKey = selectedKey;
 
     const menu = (
       <Menu>
         <Menu.Item key="api">
-          <Link to="/api/create"><Icon type="file-add" /> 新建接口</Link>
+          <Link to="/create/api"><Icon type="file-add" /> 新建接口</Link>
         </Menu.Item>
         <Menu.Item key="project">
-          <Link to="/project/create"><Icon type="folder-add" /> 新建项目</Link>
+          <Link to="/create/project"><Icon type="folder-add" /> 新建项目</Link>
         </Menu.Item>
       </Menu>
     );
@@ -47,17 +64,40 @@ export default class ProjectsList extends React.Component {
     );
 
     return (
-      <div className="component-projects-menu">
+      <div className="component-projects-list">
         <Card title="接口管理" extra={dropdown}>
           {/*<Search />*/}
           <Tree
-            showLine
-            onSelect={this.onSelect}
+            className="projects-tree"
+            onSelect={this.handleSelect}
+            onExpand={this.handleExpand}
+            selectedKeys={[selectedKey]}
+            expandedKeys={[expandedKey]}
           >
             {projects.map(project => {
-              return <TreeNode title={project.name} key={`project-${project.id}`}>
+              return <TreeNode title={<span className="project-title">{project.name}</span>} key={`project-${project.id}`}>
                 {project.apis.map(api => {
-                  return <TreeNode title={`${api.path} ${api.method}`} key={`api-${api.id}`} />
+                  let color = 'green';
+                  if (api.method === 'GET') {
+                    color = 'green';
+                  } else if (api.method === 'POST') {
+                    color = 'blue';
+                  } else if (api.method === 'PUT') {
+                    color = 'orange';
+                  } else if (api.method === 'DELETE') {
+                    color = 'red';
+                  }
+                  return (
+                    <TreeNode 
+                      title={
+                        <span>
+                          <Tag color={color}>{api.method}</Tag>
+                          <span className="api-path">{api.path}</span>
+                        </span>
+                      } 
+                      key={`api-${api.id}`} 
+                    />
+                  )
                 })}
               </TreeNode>
             })}

@@ -22,8 +22,21 @@ export default class Project {
     this.apis = apis.map(api => (new Api(api)));
   }
 
-  static async load(id) {
-    const { data } = await Ajax.get(`/projects/${id}`);
-    return new Project(data);
+  static async loadById(id) {
+    return Ajax.get(`/projects/${id}`);
+  }
+
+  static async loadAll() {
+    return Ajax.get('/projects');
+  }
+
+  static async create(project) {
+    return Ajax.post('/projects', {
+      body: project
+    });
+  }
+
+  static async remove(id) {
+    return Ajax.del(`/projects/${id}`);
   }
 }

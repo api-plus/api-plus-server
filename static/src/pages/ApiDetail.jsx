@@ -1,16 +1,16 @@
 import React from 'react';
 import { Card, Icon, Popconfirm } from 'antd';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { func, string } from 'prop-types';
 
-import ApiStore from '../models/Api';
-import UIStore from '../models/UI';
+import Api from '../models/Api';
+import Project from '../models/Project';
 import Ajax from '../components/ajax';
 import Previewer from '../components/schema/Previewer';
 
 import './ApiDetail.less'
 
-@observer
+@inject('projectListStore') @observer
 class ApiDetail extends React.Component {
   static propTypes = {
     id: string.isRequired
@@ -27,14 +27,20 @@ class ApiDetail extends React.Component {
   }
 
   async loadApi(id) {
-    const api = await ApiStore.load(id);
-    UIStore.setApi(api);
+    const apiRes = await Api.load(id);
+    const api = new Api(apiRes.data);
+    const projectRes = await Project.loadById(api.project_id);
+    const project = new Project(projectRes.data);
+
+    this.props.projectListStore.setApi(api);
+    this.props.projectListStore.setProject(project);
   }
 
   render() {
-    const api = UIStore.api;
+    const api = this.props.projectListStore.api;
 
-    return <div className="component-api-detail">
+    return (
+      <div className="component-api-detail">
         <h2>{api.path}</h2>
         <p>{api.description}</p>
         <h3>基本信息</h3>
@@ -63,28 +69,32 @@ class ApiDetail extends React.Component {
           })}
         </ul>*/}
         <Previewer schema={api.response || {}} format="table" type="response" />
-    </div>;
+      </div>
+    );
   }
 }
 
+@inject('projectListStore') @observer
 class ApiCard extends React.Component {
 
 
-  onDeleteClicked = () => {
-    Ajax.del('/apis/' + this.props.id)
-    .then((data) => {
-      // this.props.onApiDeleted(this.props.id);
-    });
+  handleDeleteClick = async () => {
+    const apiId = this.props.projectListStore.api.id;
+    const projectId = this.props.projectListStore.project.id;
+    const { code } = await Api.remove(apiId);
+    this.props.projectListStore.removeApi(apiId);
+    location.hash = `/project/${projectId}`;
   }
-  onApiUpdateClicked = () => {
-    // this.props.onApiUpdateClicked(this.props.id);
+  handleUpdateClick = () => {
+    const apiId = this.props.projectListStore.api.id;
+    location.hash = `/update/api/${apiId}`;
   }
 
   render() {
     const extra = (
       <div>
-        <a className="extra-btn" onClick={this.onApiUpdateClicked}><Icon type="edit" /></a>
-        <Popconfirm placement="left" title="确定删除吗？" onConfirm={this.onDeleteClicked}>
+        <a className="extra-btn" onClick={this.handleUpdateClick}><Icon type="edit" /></a>
+        <Popconfirm placement="left" title="确定删除吗？" onConfirm={this.handleDeleteClick}>
           <a className="extra-btn"><Icon type="delete" /></a>
         </Popconfirm>
       </div>
@@ -92,12 +102,15 @@ class ApiCard extends React.Component {
 
     const apiId = this.props.match.params.id;
 
-    return <div className="component-api-card">
-      <Card title="接口文档" extra={extra}>
-        <ApiDetail id={apiId} />
-      </Card>   
-    </div>;
+    return (
+      <div className="component-api-card">
+        <Card title="接口文档" extra={extra}>
+          <ApiDetail id={apiId} />
+        </Card>   
+      </div>
+    );
   }
 }
-// ApiCard.ApiDocs = ApiDocs;
+
+ApiCard.ApiDetail = ApiDetail;
 export default ApiCard;

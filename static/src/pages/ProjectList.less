@@ -1,0 +1,26 @@
+.component-projects-list {
+  .projects-tree {
+    .project-title {
+      font-size: 14px;
+    }
+    // 覆写一部分 antd tree 样式
+    &.ant-tree li ul {
+      padding-left: 0;
+
+      .ant-tree-node-content-wrapper {
+        width: 95%;
+
+        .ant-tree-title {
+          width: 100%;
+          display: inline-block;
+        }
+      }
+    }
+  }
+  .extra-btn {
+    margin: 2px;
+    padding: 3px;
+    color: #666;
+    font-size: 14px;
+  }
+}
