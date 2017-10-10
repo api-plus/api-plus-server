@@ -57,4 +57,10 @@ export default class Api {
   static async remove(id) {
     return Ajax.del(`/apis/${id}`);
   }
+
+  static async update(api) {
+    return Ajax.put(`/apis/${api.id}`, {
+      body: api
+    });
+  }
 }

@@ -13,33 +13,29 @@ const Option = Select.Option;
 const TextArea = Input.TextArea;
 
 /* internal modules */
+import Api from '../models/Api';
+import Project from '../models/Project';
 import Ajax from '../components/ajax';
 import SchemaEditor from '../components/schema/Editor';
 import ParameterEditor from '../home/ParameterEditor';
 
-/* styles */
-
-/* proptypes */
-const PropTypes = {
-  onApiUpdated: func.isRequired,
-  projects: array.isRequired,
-  id: string.isRequired
-}
-
 /* component */
-@inject('projectListStore', 'uiStore') @observer
+@inject('projectListStore') @observer
 export default class ApiUpdate extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      api: null
-    };
-    this.loadData(props.id);
+
+
+  componentDidMount() {
+    this.loadApi(this.props.match.params.id);
   }
 
-  async loadData(id) {
-    let api = (await Ajax.get('/apis/' + id)).data;
-    this.setState({ api });
+  async loadApi(id) {
+    const apiRes = await Api.load(id);
+    const api = new Api(apiRes.data);
+    const projectRes = await Project.loadById(api.project_id);
+    const project = new Project(projectRes.data);
+
+    this.props.projectListStore.setApi(api);
+    this.props.projectListStore.setProject(project);
   }
 
   onSave = () => {
@@ -47,15 +43,14 @@ export default class ApiUpdate extends React.Component {
       if (err) {
         return;
       }
-      let { project_id, path, description, method, scheme, consumes } = values;
-      Ajax.put('/apis/' + this.props.id, {
-        body: {
-          project_id, path, description, method, scheme, consumes,
-          parameters: this.parametersEditor.get(),
-          response: this.responsesEditor.get()
-        }
-      }).then((data) => {
-        this.props.onApiUpdated(project_id, data.data);
+      // let { project_id, path, description, method, scheme, consumes } = values;
+      values.parameters = this.parametersEditor.get();
+      values.response = this.responsesEditor.get();
+
+      const apiId = this.props.projectListStore.api.id;
+      values.id = apiId;
+      Api.update(values).then((data) => {
+        location.hash = `/api/${apiId}`;
       });
     });
   }
@@ -76,12 +71,11 @@ export default class ApiUpdate extends React.Component {
       wrapperCol: { span: 22 },
     };
 
-    const { api } = this.state;
-
+    const { projects, project, api } = this.props.projectListStore;
     return <div>
       <Card title="新建接口">
         <h3>基本信息</h3>
-        <WrappedApiForm ref={this.saveFormRef} projects={this.props.projects} api={api} />
+        <WrappedApiForm ref={this.saveFormRef} projects={projects} api={api} />
         <h3>请求参数</h3>
         {/*<ParameterEditor ref={this.saveParametersRef} parameters={[]} />*/}
         {
@@ -105,7 +99,6 @@ export default class ApiUpdate extends React.Component {
     </div>
   }
 }
-ApiUpdate.propTypes = PropTypes;
 
 class ApiForm extends React.Component {
 
@@ -125,7 +118,7 @@ class ApiForm extends React.Component {
       wrapperCol: { span: 18 },
     };
 
-    if (api) {
+    if (api && api.project_id) {
 
     return <Form layout="horizontal">
       <FormItem {...singleItemLayout} label="项目">
@@ -134,7 +127,7 @@ class ApiForm extends React.Component {
           initialValue: api.project_id.toString()
         })(
           <Select>
-            {projects.map(p => <Option key={p.id.toString()}>{p.name}</Option>)}
+            {projects.map(p => <Option key={p.id}>{p.name}</Option>)}
           </Select>
         )}
       </FormItem>
