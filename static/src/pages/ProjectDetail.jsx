@@ -43,9 +43,9 @@ export default class ProcjectDetail extends React.Component {
   render() {
     const extra = (
       <div>
-        <a className="extra-btn" onClick={this.handleUpdateClick}><Icon type="edit" /></a>
+        <a className="extra-btn" onClick={this.handleUpdateClick}><Icon type="edit" /> 编辑</a>
         <Popconfirm placement="left" title="确定删除吗？" onConfirm={this.handleDeleteClick}>
-          <a className="extra-btn"><Icon type="delete" /></a>
+          <a className="extra-btn"><Icon type="delete" /> 删除</a>
         </Popconfirm>
       </div>
     );

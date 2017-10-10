@@ -46,28 +46,8 @@ class ApiDetail extends React.Component {
         <h3>基本信息</h3>
         <p>请求方式：{api.method}，协议类型：{api.scheme}，数据格式：{api.consumes}</p>
         {api.parameters && <h3>请求参数</h3>}
-        {/*<ul>
-          {api.parameters && Object.entries(api.parameters).map(([key, value]) => {
-            return <li key={key}>
-              <span className="parameter-name">{key}</span>
-              <span className="parameter-type">{value.type}</span>
-              <span className="parameter-required">必选: {value.isRequired.toString()}</span>
-              <span className="parameter-default">默认值: {value.default || '无' }</span>
-              <span className="parameter-description">{value.description}</span>
-            </li>
-          })}
-        </ul>*/}
         <Previewer schema={api.parameters || {}} format="table" type="request" />
         {api.response && <h3>返回格式</h3>}
-        {/*<ul>
-          {api.response && Object.entries(api.response).map(([key, value]) => {
-            return <li key={key}>
-              <span className="responses-name">{value.name}</span>
-              <span className="responses-type">{value.type}</span>
-              <span className="responses-description">{value.description}</span>
-            </li>
-          })}
-        </ul>*/}
         <Previewer schema={api.response || {}} format="table" type="response" />
       </div>
     );
@@ -93,9 +73,9 @@ class ApiCard extends React.Component {
   render() {
     const extra = (
       <div>
-        <a className="extra-btn" onClick={this.handleUpdateClick}><Icon type="edit" /></a>
+        <a className="extra-btn" onClick={this.handleUpdateClick}><Icon type="edit" /> 编辑</a>
         <Popconfirm placement="left" title="确定删除吗？" onConfirm={this.handleDeleteClick}>
-          <a className="extra-btn"><Icon type="delete" /></a>
+          <a className="extra-btn"><Icon type="delete" /> 删除</a>
         </Popconfirm>
       </div>
     );

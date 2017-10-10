@@ -16,7 +16,6 @@ import Api from '../models/Api';
 import Project from '../models/Project';
 import Ajax from '../components/ajax';
 import SchemaEditor from '../components/schema/Editor';
-import ParameterEditor from '../home/ParameterEditor';
 
 /* component */
 @inject('projectListStore') @observer
@@ -72,11 +71,10 @@ export default class ApiUpdate extends React.Component {
 
     const { projects, project, api } = this.props.projectListStore;
     return <div>
-      <Card title="修改接口">
+      <Card title="编辑接口">
         <h3>基本信息</h3>
         <WrappedApiForm ref={this.saveFormRef} projects={projects} api={api} />
         <h3>请求参数</h3>
-        {/*<ParameterEditor ref={this.saveParametersRef} parameters={[]} />*/}
         {
           api && api.parameters && 
           <SchemaEditor 

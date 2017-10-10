@@ -16,7 +16,6 @@ import Api from '../models/Api';
 import Project from '../models/Project';
 import Ajax from '../components/ajax';
 import SchemaEditor from '../components/schema/Editor';
-import ParameterEditor from '../home/ParameterEditor';
 
 /* component */
 @inject('projectListStore') @observer
@@ -61,7 +60,7 @@ export default class ProjectUpdate extends React.Component {
 
     const { project } = this.props.projectListStore;
     return <div>
-      <Card title="修改项目">
+      <Card title="编辑项目">
         <WrappedProjectForm ref={this.saveFormRef} project={project} />
         <br />
         <Button type="primary" size="large" onClick={this.onSave}>保存</Button>

@@ -11,7 +11,7 @@ export default class Homepage extends React.Component {
     return (
       <Layout>
         <Header className="layout-header">
-          <div className="layout-brand"><a href="../home/index.html"></a></div>
+          <div className="layout-brand"><a href="#/"></a></div>
         </Header>
         <Content className="layout-content layout-centent-home">
           {this.props.children}

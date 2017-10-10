@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
-import { HashRouter, Route } from 'react-router-dom';
+import { HashRouter, Link, Route } from 'react-router-dom';
 import { Col, Row } from 'antd';
 
 import store from '../models';
@@ -14,11 +14,15 @@ import ApiCreate from './ApiCreate';
 import ApiUpdate from './ApiUpdate';
 import ApiDetail from './ApiDetail';
 
+import './Home.less';
 class Home extends React.Component {
   render() {
     return (
-      <span>Home</span>
-    )
+      <div className="page-home">
+        <h1>欢迎来到 Api Plus ! </h1>
+        请从左边选择一个项目，或<Link to="/create/project">新建一个项目</Link>
+      </div>
+    );
   }
 }
 
