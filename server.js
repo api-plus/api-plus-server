@@ -35,7 +35,7 @@ app.use(async function (ctx, next) {
 
 /* static */
 app.use(Static('./static/build/production'));
-app.use(Static('./static/build/production/pages/home'));
+app.use(Static('./static/build/production/pages'));
 
 /* body */
 app.use(BodyParser());
