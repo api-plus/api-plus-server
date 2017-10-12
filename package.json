@@ -1,7 +1,7 @@
 {
   "name": "api-plus",
   "version": "0.2.0",
-  "description": "Api Document Manager",
+  "description": "Api Plus Server Side",
   "main": "server.js",
   "scripts": {
     "sync": "node models/sync.js",

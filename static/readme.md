@@ -1,8 +1,20 @@
-结合 react-router http://frontendinsights.com/connect-mobx-react-router/
-SSR https://medium.com/@foxhound87/state-management-hydration-with-mobx-we-must-react-ep-05-1922a72453c6
-组织 store：
-- https://github.com/mobxjs/mobx-react/
-- https://github.com/mobxjs/mobx/issues/300
+# Api Plus UI
 
-动态表单：https://foxhound87.github.io/mobx-react-form/
-awesome: https://github.com/mobxjs/awesome-mobx/blob/master/README-CN.md
+## TODO
+
+### stage 1
+
+- schema 标准化
+- 编辑器优化
+- 导入/导出 swagger
+- project detail 页面，界面交互优化
+- api detail 页面，界面交互游湖
+
+### stage 2
+
+- 自有用户体系(登录、查询、管理)
+- 外接用户体系
+- 历史记录
+- try it out
+- mock data
+- postman 相关功能
