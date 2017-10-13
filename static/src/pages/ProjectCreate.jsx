@@ -1,4 +1,4 @@
-// TODO 
+// TODO
 // 1. loading 状态
 // 2. 请求失败的提示
 
@@ -23,7 +23,7 @@ export default class ProjectCreate extends React.Component {
       if (err) {
         return;
       }
-      
+
       Project.create(values)
       .then(({ code, data }) => {
         this.props.projectListStore.addProject(new Project(data));
@@ -38,7 +38,7 @@ export default class ProjectCreate extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{flex: 1}}>
         <Card title="新建项目">
           <WrappedProjectForm ref={this.saveFormRef}/>
           <br />

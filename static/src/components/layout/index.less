@@ -1,3 +1,13 @@
+html, body {
+  height: 100%;
+  #root {
+    height: 100%;
+    & > .ant-layout {
+      min-height: 100%;
+    }
+  }
+}
+
 .layout-header {
   padding: 0 40px;
   height: 60px;
@@ -47,22 +57,22 @@
   color: #c9c9c9;
 }
 .layout-content {
+  display: flex;
   background: #edf0f5;
   padding: 10px;
-
+  & > .ant-row {
+    display: flex;
+    flex: auto;
+  }
   .ant-card-head-title {
     font-size: 18px;
   }
 }
 
 .layout-footer {
-  height: 100px;
-  padding: 22px 0;
+  padding: 16px 0;
   text-align: center;
   background-color: #f8f9fb;
-  ul>li{
-    margin: 8px 0;
-  }
 }
 
 @media (max-width: 1200px){

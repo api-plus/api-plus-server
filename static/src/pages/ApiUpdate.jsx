@@ -1,5 +1,5 @@
 
-// TODO 
+// TODO
 // 1. loading 状态
 // 2. 请求失败的提示
 
@@ -70,14 +70,14 @@ export default class ApiUpdate extends React.Component {
     };
 
     const { projects, project, api } = this.props.projectListStore;
-    return <div>
+    return <div style={{flex: 1}}>
       <Card title="编辑接口">
         <h3>基本信息</h3>
         <WrappedApiForm ref={this.saveFormRef} projects={projects} api={api} />
         <h3>请求参数</h3>
         {
-          api && api.parameters && 
-          <SchemaEditor 
+          api && api.parameters &&
+          <SchemaEditor
             ref={this.saveParametersRef}
             showPreviewer={false}
             showAddParamBtn={true}
@@ -87,7 +87,7 @@ export default class ApiUpdate extends React.Component {
         }
         <h3>返回格式</h3>
         {
-          api && api.response && 
+          api && api.response &&
           <SchemaEditor ref={this.saveResponsesRef} schema={api.response} />
         }
         <br />
@@ -191,7 +191,7 @@ class ApiForm extends React.Component {
     } else {
       return <div>loading</div>
     }
-  
+
   }
 }
 

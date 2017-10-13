@@ -1,5 +1,5 @@
 
-// TODO 
+// TODO
 // 1. loading 状态
 // 2. 请求失败的提示
 
@@ -59,7 +59,7 @@ export default class ProjectUpdate extends React.Component {
     };
 
     const { project } = this.props.projectListStore;
-    return <div>
+    return <div style={{flex: 1}}>
       <Card title="编辑项目">
         <WrappedProjectForm ref={this.saveFormRef} project={project} />
         <br />
@@ -126,7 +126,7 @@ class ProjectForm extends React.Component {
     }
   }
 
-  
+
 }
 
 const WrappedProjectForm = Form.create()(ProjectForm);

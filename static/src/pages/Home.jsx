@@ -31,10 +31,10 @@ ReactDOM.render(
     <HashRouter>
       <AppLayout>
         <Row gutter={10}>
-          <Col span={6}>
+          <Col className="layout-content-left" span={6}>
             <ProjectList />
           </Col>
-          <Col span={18}>
+          <Col className="layout-content-right" span={18}>
             <Route exact path="/" component={Home}/>
             <Route path="/create/project" component={ProjectCreate}/>
             <Route path="/update/project/:id" component={ProjectUpdate}/>
@@ -46,7 +46,7 @@ ReactDOM.render(
         </Row>
       </AppLayout>
     </HashRouter>
-  </Provider>, 
+  </Provider>,
   document.getElementById('root')
 );
 

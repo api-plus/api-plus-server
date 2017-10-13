@@ -1,5 +1,5 @@
 
-// TODO 
+// TODO
 // 1. loading 状态
 // 2. 请求失败的提示
 
@@ -29,7 +29,7 @@ export default class ApiCreate extends React.Component {
       if (err) {
         return;
       }
-      
+
       Object.assign(values, {
         parameters: this.parametersEditor.get(),
         response: this.responsesEditor.get()
@@ -61,12 +61,12 @@ export default class ApiCreate extends React.Component {
     };
 
     return (
-      <div>
+      <div style={{flex: 1}}>
         <Card title="新建接口">
           <h3>基本信息</h3>
           <WrappedApiForm ref={this.saveFormRef} projects={projects} />
           <h3>请求参数</h3>
-          <SchemaEditor 
+          <SchemaEditor
             ref={this.saveParametersRef}
             showPreviewer={false}
             showAddParamBtn={true}

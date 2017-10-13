@@ -65,7 +65,7 @@ export default class ProjectsList extends React.Component {
 
     return (
       <div className="component-projects-list">
-        <Card title="接口管理" extra={dropdown}>
+        <Card className="project-list-card" title="接口管理" extra={dropdown}>
           {/*<Search />*/}
           <Tree
             className="projects-tree"
@@ -88,14 +88,14 @@ export default class ProjectsList extends React.Component {
                     color = 'red';
                   }
                   return (
-                    <TreeNode 
+                    <TreeNode
                       title={
                         <span>
                           <Tag color={color}>{api.method}</Tag>
                           <span className="api-path">{api.path}</span>
                         </span>
-                      } 
-                      key={`api-${api.id}`} 
+                      }
+                      key={`api-${api.id}`}
                     />
                   )
                 })}
