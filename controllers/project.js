@@ -1,7 +1,7 @@
 const ErrorCode = require('common-errors');
 
 const { success } = require('../common/jsonResponse');
-const { APIs, Projects } = require('../models');
+const { Project } = require('../models');
 
 // create
 exports.Post = async function(ctx) {
@@ -10,7 +10,7 @@ exports.Post = async function(ctx) {
     throw ErrorCode.ArgumentNullError('spec');
   }
 
-  ctx.body = success(await Projects.create(body));
+  ctx.body = success(await Project.create(body));
 }
 
 // destroy
@@ -20,7 +20,7 @@ exports.Del = async function(ctx) {
     throw ErrorCode.ArgumentNullError('id');
   }
 
-  let deleteCount = await Projects.destroy({
+  let deleteCount = await Project.destroy({
     where: { id }
   });
   if (!deleteCount) {
@@ -39,7 +39,7 @@ exports.Put = async function(ctx) {
     throw ErrorCode.ArgumentNullError('id');
   }
 
-  let [ affectedCount ] = await Projects.update(body, {
+  let [ affectedCount ] = await Project.update(body, {
     where: { id }
   });
   if (!affectedCount) {
@@ -55,12 +55,12 @@ exports.Get = async function(ctx) {
   let results = null;
   let id = ctx.params.id;
   if (id) {
-    results = await Projects.findById(id);
+    results = await Project.findById(id);
     if (!results) {
       throw ErrorCode.NotFoundError('id = ' + id);
     }
   } else {
-    results = await Projects.findAll({
+    results = await Project.findAll({
       order: [ 
         ['gmt_create', 'DESC']
       ]
