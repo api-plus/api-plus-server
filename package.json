@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "sync": "node models/sync.js",
-    "start": "nodemon server.js"
+    "start": "PORT=8081 nodemon server.js"
   },
   "author": "meikidd <meikidd@gmail.com>",
   "license": "ISC",

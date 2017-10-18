@@ -1,19 +1,16 @@
 const ErrorCode = require('common-errors');
 
 const { success } = require('../common/jsonResponse');
-const { Parameters } = require('../models');
+const { APIs, Projects } = require('../models');
 
 // create
 exports.Post = async function(ctx) {
   let body = ctx.request.body;
-  if (!body.name) {
-    throw ErrorCode.ArgumentNullError('name');
-  }
-  if (!body.api_id) {
-    throw ErrorCode.ArgumentNullError('api_id');
+  if (!body.spec) {
+    throw ErrorCode.ArgumentNullError('spec');
   }
 
-  ctx.body = success(await Parameters.create(body));
+  ctx.body = success(await Projects.create(body));
 }
 
 // destroy
@@ -23,7 +20,7 @@ exports.Del = async function(ctx) {
     throw ErrorCode.ArgumentNullError('id');
   }
 
-  let deleteCount = await Parameters.destroy({
+  let deleteCount = await Projects.destroy({
     where: { id }
   });
   if (!deleteCount) {
@@ -42,7 +39,7 @@ exports.Put = async function(ctx) {
     throw ErrorCode.ArgumentNullError('id');
   }
 
-  let [ affectedCount ] = await Parameters.update(body, {
+  let [ affectedCount ] = await Projects.update(body, {
     where: { id }
   });
   if (!affectedCount) {
@@ -58,12 +55,16 @@ exports.Get = async function(ctx) {
   let results = null;
   let id = ctx.params.id;
   if (id) {
-    results = await Parameters.findById(id);
+    results = await Projects.findById(id);
     if (!results) {
       throw ErrorCode.NotFoundError('id = ' + id);
     }
   } else {
-    results = await Parameters.findAll();
+    results = await Projects.findAll({
+      order: [ 
+        ['gmt_create', 'DESC']
+      ]
+    });
   }
 
   ctx.body = success(results);
