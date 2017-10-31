@@ -6,8 +6,8 @@ const { Project } = require('../models');
 // create
 exports.Post = async function(ctx) {
   let body = ctx.request.body;
-  if (!body.spec) {
-    throw ErrorCode.ArgumentNullError('spec');
+  if (!body.yaml) {
+    throw ErrorCode.ArgumentNullError('yaml');
   }
 
   ctx.body = success(await Project.create(body));
