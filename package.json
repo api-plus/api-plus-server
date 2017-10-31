@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "sync": "node models/sync.js",
+    "sync-force": "node models/sync.js --force",
     "start": "PORT=8081 nodemon server.js"
   },
   "author": "meikidd <meikidd@gmail.com>",
