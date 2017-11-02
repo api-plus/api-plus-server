@@ -5,10 +5,16 @@ const sequelize = require('./connect');
   Project Model
 */
 let Project = sequelize.define('project', {
-  yaml: {
+  spec: {
     type: Sequelize.TEXT,
     allowNull: false,
-    comment: 'OpenAPI yaml schema',
+    comment: 'OpenAPI specification',
+  },
+  format: {
+    type: Sequelize.ENUM('json', 'yaml'),
+    allowNull: false,
+    comment: 'OpenAPI specification format',
+    defaultValue: 'yaml'
   },
 }, {
   tableName: 'project',
